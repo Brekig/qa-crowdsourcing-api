@@ -1,5 +1,6 @@
 import authenticate from "./authenticate";
 import register from "./register";
+import resetPassword from "./resetPassword";
 import { RouteBuilder } from "../../utils";
 
 export default RouteBuilder.routerForEndpoints([
@@ -13,4 +14,9 @@ export default RouteBuilder.routerForEndpoints([
 		controller: register,
 		method: "post",
 	},
+	{
+		route: "/reset-password",
+		controller: resetPassword,
+		method: "post",
+	}
 ]);

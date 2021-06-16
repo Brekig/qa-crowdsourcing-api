@@ -13,3 +13,10 @@ export interface SignupTemplateData {
 }
 
 export type Template = SignupTemplateData;
+
+
+export interface ResetPasswordTemplateData {
+	data: {
+		clickLink: string;
+	};
+}
