@@ -52,6 +52,11 @@ export interface UserInterface extends Document {
 	completeTutorial: () => Promise<void>;
 	getMovitation: () => MotivationType;
 	getHighscoreList: () => Promise<PublicUser[]>;
+	getHightscoreListExpand: (
+		val: boolean,
+		countUp: number,
+		countDown: number
+	) => Promise<PublicUser[]>;
 }
 
 export interface ResetPasswordCodeInfo {

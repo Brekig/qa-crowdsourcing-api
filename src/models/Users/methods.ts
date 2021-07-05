@@ -61,7 +61,7 @@ export const getPublic = function (this: UserInterface): PublicUser {
 			hiscoreRank: this.hiscoreRank ?? -1,
 		},
 		hasCompletedTutorial: this.hasCompletedTutorial ?? false,
-		streak: this.dailyStreak
+		streak: this.dailyStreak,
 	};
 };
 
@@ -84,5 +84,46 @@ export const getHighscoreList = async function (
 	const users = await Users.find({
 		hiscoreRank: { $gte: firstRank, $lte: lastRank },
 	});
+	return users.map((user) => user.getPublic());
+};
+
+export const getHightscoreListExpand = async function (
+	this: UserInterface,
+	loadDirection: boolean,
+	countUp: number,
+	countDown: number
+	// true = UP, false = down
+): Promise<PublicUser[]> {
+	console.log("GETHIGHSCORELISTEXPAND FUNCTION CALL");
+	const USER_COUNT_ABOVE = 5;
+	const USER_COUNT_BELOW = 4;
+	const TOTAL_USERS_ABOVE = USER_COUNT_ABOVE * countUp;
+	const TOTAL_USERS_BELOW = USER_COUNT_BELOW * countDown;
+	const userRank = this.hiscoreRank;
+	const firstRank = Math.max(1, userRank - TOTAL_USERS_ABOVE);
+	const lastRank = firstRank + TOTAL_USERS_ABOVE + TOTAL_USERS_BELOW;
+	// if (loadDirection && !(firstRank >= 6)) {
+	// 	const users = await Users.find({
+	// 		hiscoreRank: { $lte: firstRank, $gte: lastRank },
+	// 	});
+	// } else if (!loadDirection) {
+	// }
+	console.log("firstrank: ", firstRank);
+	console.log("lastrank: ", lastRank);
+
+	if (loadDirection && firstRank > 6) {
+		// const firstRank = Math.max(1, userRank - TOTAL_USERS_ABOVE);
+		console.log("userranked!", userRank);
+		console.log("firstrank222222: ", firstRank);
+
+		var users = await Users.find({
+			hiscoreRank: { $gte: firstRank, $lte: firstRank + USER_COUNT_ABOVE },
+		});
+	} else {
+		var users = await Users.find({
+			hiscoreRank: { $gte: firstRank, $lte: lastRank + USER_COUNT_ABOVE },
+		});
+	}
+
 	return users.map((user) => user.getPublic());
 };

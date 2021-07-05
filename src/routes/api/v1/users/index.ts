@@ -7,6 +7,8 @@ import currentInvites from "./currentInvites";
 import pushNotificationTokens from "./pushNotificationTokens";
 import getMotivation from "./getMotivation";
 import hiscorePlacement from "./hiscorePlacement";
+import hiscoreExpandUp from "./hiscoreExpandUp";
+import hiscoreExpandDown from "./hiscoreExpandDown";
 import { RouteBuilder } from "../../../utils";
 import { auth, deleteJWT } from "../utils";
 
@@ -69,5 +71,17 @@ export default RouteBuilder.routerForEndpoints([
 		method: "get",
 		middleware: [auth],
 		controller: hiscorePlacement,
+	},
+	{
+		route: "/expand_hiscore_up",
+		method: "get",
+		middleware: [auth],
+		controller: hiscoreExpandUp,
+	},
+	{
+		route: "/hiscore_placement/expand_hiscore_down",
+		method: "get",
+		middleware: [auth],
+		controller: hiscoreExpandDown,
 	},
 ]);
