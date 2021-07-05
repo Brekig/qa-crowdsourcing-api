@@ -87,7 +87,7 @@ export const getHighscoreList = async function (
 	return users.map((user) => user.getPublic());
 };
 
-export const getHightscoreListExpand = async function (
+export const getHighscoreListExpand = async function (
 	this: UserInterface,
 	loadDirection: boolean,
 	countUp: number,
@@ -110,18 +110,21 @@ export const getHightscoreListExpand = async function (
 	// }
 	console.log("firstrank: ", firstRank);
 	console.log("lastrank: ", lastRank);
+	console.log("userranked!", userRank);
+	console.log("firstrank222222: ", firstRank);
 
 	if (loadDirection && firstRank > 6) {
 		// const firstRank = Math.max(1, userRank - TOTAL_USERS_ABOVE);
-		console.log("userranked!", userRank);
-		console.log("firstrank222222: ", firstRank);
 
 		var users = await Users.find({
 			hiscoreRank: { $gte: firstRank, $lte: firstRank + USER_COUNT_ABOVE },
 		});
 	} else {
 		var users = await Users.find({
-			hiscoreRank: { $gte: firstRank, $lte: lastRank + USER_COUNT_ABOVE },
+			hiscoreRank: {
+				$gte: userRank + TOTAL_USERS_BELOW - USER_COUNT_BELOW,
+				$lte: lastRank,
+			},
 		});
 	}
 

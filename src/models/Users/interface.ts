@@ -52,7 +52,7 @@ export interface UserInterface extends Document {
 	completeTutorial: () => Promise<void>;
 	getMovitation: () => MotivationType;
 	getHighscoreList: () => Promise<PublicUser[]>;
-	getHightscoreListExpand: (
+	getHighscoreListExpand: (
 		val: boolean,
 		countUp: number,
 		countDown: number
