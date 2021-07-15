@@ -83,6 +83,23 @@ export default class AppUtils {
 				useCreateIndex: true,
 				useUnifiedTopology: true,
 			});
+			// const CUTOFFS = [5, 10, 15, 20];
+			const CUTOFFS = [10];
+			for (const cutoff of CUTOFFS) {
+				const users = await Users.find({
+					$or: [{ level: { $gt: cutoff - 1 } }, { resetCount: { $gt: 0 } }],
+				});
+				const usernames: string[] = [];
+				for (const user of users) {
+					let tickets = (user.resetCount ?? 0) + (user.level >= cutoff ? 1 : 0);
+					while (tickets-- > 0) usernames.push(user.username);
+				}
+				const username =
+					usernames[Math.floor(Math.random() * usernames.length)];
+				console.log(
+					`Winner for chest for lvl ${cutoff} is ${username}    POT SIZE ${users.length}`
+				);
+			}
 		} catch (error) {
 			console.log(
 				"error",
